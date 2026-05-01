@@ -1,6 +1,6 @@
 import pygame as pg
 pg.init()
-width=100
+width=1000
 height=500
 pg.display.set_mode((width,height))
 while True:
