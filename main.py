@@ -6,7 +6,7 @@ height=500
 screen=pg.display.set_mode((width,height))
 pg.display.set_caption("Escape Run  ")#change the name in the caption
 clock=pg.time.Clock()#it's going to help with the frame rate 
-test_surface=pg.Surface((100,200))
+test_surface=pg.image.load("Image/Sky.png")
 test_surface.fill("White")
 while True:
     for event in pg.event.get():
