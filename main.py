@@ -11,6 +11,8 @@ sky_imaage=pg.image.load("Image/sky.jpg")
 sky_imaage=pg.transform.scale(sky_imaage,(1000,400))#resize the image
 ground_image=pg.image.load("Image/ground.png")
 ground_image=pg.transform.scale(ground_image,(1000,270))
+enemy_image=pg.image.load("Image/enemy.png")
+enemy_x_position=800
 score_image=score.render("Hi",False,"Black")
 while True:
     for event in pg.event.get():
@@ -20,5 +22,9 @@ while True:
     screen.blit(sky_imaage,(0,0))
     screen.blit(ground_image,(0,360))
     screen.blit(score_image,(width/2,height/2))
+    enemy_x_position-=6
+    screen.blit(enemy_image,(enemy_x_position,300))
+    if enemy_x_position<=-100:
+        enemy_x_position=1000
     pg.display.update()
     clock.tick(60)#Consistent Game Speed
