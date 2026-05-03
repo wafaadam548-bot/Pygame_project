@@ -6,7 +6,7 @@ height=500
 screen=pg.display.set_mode((width,height))
 pg.display.set_caption("Escape Run  ")#change the name in the caption
 clock=pg.time.Clock()#it's going to help with the frame rate 
-score=pg.font.Font(None,50)
+score=pg.font.Font("Font/Archivo_Black/ArchivoBlack-Regular.ttf",50)
 sky_imaage=pg.image.load("Image/sky.jpg")
 sky_imaage=pg.transform.scale(sky_imaage,(1000,400))#resize the image
 ground_image=pg.image.load("Image/ground.png")
