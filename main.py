@@ -15,6 +15,7 @@ enemy_image=pg.image.load("Image/enemy.png").convert_alpha() #pygame is going to
 enemy_image=pg.transform.scale(enemy_image,(130,105))
 player1=pg.image.load("Image/Player/Player1.png").convert_alpha()
 player1=pg.transform.scale(player1,(100,75))
+player1_rect=player1.get_rect(topleft=(20,310))
 
 enemy_x_position=800
 score_image=score.render("Hi",False,"Black")
@@ -28,7 +29,7 @@ while True:
     screen.blit(score_image,(width/2,height/2))
     enemy_x_position-=6
     screen.blit(enemy_image,(enemy_x_position,310))
-    screen.blit(player1,(20,310))
+    screen.blit(player1,player1_rect)
     if enemy_x_position<=-100:
         enemy_x_position=1000
     pg.display.update()
