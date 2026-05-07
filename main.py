@@ -4,6 +4,15 @@ pg.init()
 width=1000
 height=500
 game_active=True
+def display_score():
+    time=int(pg.time.get_ticks()/1000)-start_time
+    score_image=score.render(f"{time}",False,"Black")
+    score_rect=score_image.get_rect(center=(400,50))
+    screen.blit(score_image,score_rect)
+
+
+
+
 screen=pg.display.set_mode((width,height))
 pg.display.set_caption("Escape Run  ")#change the name in the caption
 clock=pg.time.Clock()#it's going to help with the frame rate 
@@ -17,13 +26,13 @@ enemy_image=pg.transform.scale(enemy_image,(130,105))
 enemy_rect=enemy_image.get_rect(midbottom=(800,400))
 player1=pg.image.load("Image/Player/Player1.png").convert_alpha()
 player1=pg.transform.scale(player1,(100,75))
-move=30
+move=50
+player2=pg.image.load("Image/Player/Player2.png").convert_alpha()
+start_time=0
 player1_rect=player1.get_rect(midbottom=(move,400))
 
 enemy_x_position=800
-score_image=score.render("Hi",False,"Black")
 game_over=score.render("Game over. Press space to play again =) ", False,"Black")
-score_rect=score_image.get_rect(midtop=(300,100))
 player_gravity=0
 while True:
     for event in pg.event.get():
@@ -39,15 +48,16 @@ while True:
                     player1_rect.right-=3  
                 if event.key==pg.K_RIGHT:
                     player1_rect.right+=3
+                    
         else:#if the game is not runing 
             if event.type==pg.KEYDOWN:
                 if event.key==pg.K_SPACE:
                     game_active=True
                     enemy_rect.left=1000 
+                    start_time=int(pg.time.get_ticks()/1000)
     if game_active:            
         screen.blit(sky_imaage,(0,0))
         screen.blit(ground_image,(0,340))
-        screen.blit(score_image,(width/2,height/2))
         #enemy_x_position-=6
         screen.blit(enemy_image,(enemy_rect))
         player_gravity+=1
@@ -55,14 +65,16 @@ while True:
         if player1_rect.bottom>=380:
             player1_rect.bottom=380
         screen.blit(player1,player1_rect)
-        
+        display_score()
         enemy_rect.left-=4
         if enemy_rect.right<=-0:
             enemy_rect.left=1000
         if enemy_rect.colliderect(player1_rect):
             game_active=False
     else:
-        screen.fill("White")
-        screen.blit(game_over,(100,height/2))
+        screen.fill((120,225,225))
+        screen.blit(game_over,(200,height/2))
+        screen.blit(player2,(100,200))
+
     pg.display.update()
     clock.tick(60)#Consistent Game Speed
