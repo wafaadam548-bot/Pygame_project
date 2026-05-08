@@ -6,7 +6,7 @@ height=500
 game_active=True
 def display_score():
     time=int(pg.time.get_ticks()/1000)-start_time
-    score_image=score.render(f"{time}",False,"Black")
+    score_image=font.render(f"{time}",False,"Black")
     score_rect=score_image.get_rect(center=(400,50))
     screen.blit(score_image,score_rect)
 
@@ -16,7 +16,7 @@ def display_score():
 screen=pg.display.set_mode((width,height))
 pg.display.set_caption("Escape Run  ")#change the name in the caption
 clock=pg.time.Clock()#it's going to help with the frame rate 
-score=pg.font.Font("Font/Archivo_Black/ArchivoBlack-Regular.ttf",30)
+font=pg.font.Font("Font/Archivo_Black/ArchivoBlack-Regular.ttf",30)
 sky_imaage=pg.image.load("Image/sky.jpg").convert_alpha()
 sky_imaage=pg.transform.scale(sky_imaage,(1000,400))#resize the image
 ground_image=pg.image.load("Image/ground.png").convert_alpha()
@@ -30,7 +30,7 @@ move=50
 player2=pg.image.load("Image/Player/Player2.png").convert_alpha()
 start_time=0
 player1_rect=player1.get_rect(midbottom=(move,400))
-
+score=display_score()
 enemy_x_position=800
 game_over=score.render("Game over. Press space to play again =) ", False,"Black")
 player_gravity=0
@@ -69,7 +69,7 @@ while True:
         enemy_rect.left-=4
         if enemy_rect.right<=-0:
             enemy_rect.left=1000
-        if enemy_rect.colliderect(player1_rect):
+        if enemy_rect.colliderect(player1_rect):#if the player touch the enemy
             game_active=False
     else:
         screen.fill((120,225,225))
