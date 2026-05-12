@@ -1,5 +1,6 @@
 import pygame as pg
 from sys import exit
+import random
 pg.init()
 width=1000
 height=500
@@ -8,10 +9,6 @@ def display_score():
     score_image=font.render(f"{score}",False,"Black")
     score_rect=score_image.get_rect(center=(400,50))
     screen.blit(score_image,score_rect)
-
-
-
-
 screen=pg.display.set_mode((width,height))
 pg.display.set_caption("Escape Run  ")#change the name in the caption
 clock=pg.time.Clock()#it's going to help with the frame rate 
@@ -37,7 +34,7 @@ game_over=font.render("Game over. Press space to play again =) ", False,"Black")
 game_end=font.render("#Press enter to exite the game =) ", False,"Black")
 player_gravity=0
 coins_rect=[]
-for i in range(7):
+for i in range(90):
     coin_rect=coins.get_rect(midbottom=(100+ i * 200,300))#the i represent the space betwen each coin
     coins_rect.append(coin_rect)
 enemy_rects=[]    
@@ -66,7 +63,7 @@ while True:
                     start_time=int(pg.time.get_ticks()/1000)
                     score=0
                     coins_rect=[]
-                    for i in range(7):
+                    for i in range(90):
                         coin_rect=coins.get_rect(midbottom=(100+ i * 200,350))#the i represent the space betwen each coin
                         coins_rect.append(coin_rect)
                     enemy_rects=[]    
@@ -99,11 +96,11 @@ while True:
         for enemy_rect in enemy_rects[:]:
             screen.blit(enemy_image, enemy_rect)
 
-            enemy_rect.x -= 2
+            enemy_rect.x -= 1
 
             if enemy_rect.right <= 0:
                 enemy_rect.left = 1000 
-            enemy_hitbox = enemy_rect.inflate(-60, -30)
+            enemy_hitbox = enemy_rect.inflate(-80, -40)
             if enemy_hitbox.colliderect(player1_rect):#if the player touch the enemy
                 game_active=False     
         screen.blit(enemy_image,(enemy_rect))
