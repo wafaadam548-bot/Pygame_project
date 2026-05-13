@@ -24,8 +24,11 @@ player1=pg.image.load("Image/Player/Player1.png").convert_alpha()
 player1=pg.transform.scale(player1,(120,95))
 door_image=pg.image.load("Image/door.png").convert_alpha()
 door_image=pg.transform.scale(door_image,(100,200))
-door_rect=door_image.get_rect(midbottom=(width-100,400))
+door_rect=door_image.get_rect(center=(900,300))
 move=50
+player3=pg.image.load("Image/Player/Player3.png").convert_alpha()
+player3=pg.transform.scale(player3,(300,300))
+player3_rect=player3.get_rect(center=(100,300))
 coins=pg.image.load("Image/coins.png").convert_alpha()
 coins=pg.transform.scale(coins,(70,70))
 player2=pg.image.load("Image/Player/Player2.png").convert_alpha()
@@ -79,7 +82,9 @@ while True:
         screen.blit(sky_imaage,(0,0))
         screen.blit(ground_image,(0,340))
         screen.blit(door_image,door_rect)
-    
+        if player1_rect.colliderect(door_rect):
+            game_active=False
+
         #enemy_x_position-=6
         keys = pg.key.get_pressed()
 
@@ -113,7 +118,6 @@ while True:
         player1_rect.y+=player_gravity
         if player1_rect.bottom>=380:#If the player's bottom is at 380, they are standing on the ground.
             player1_rect.bottom=380#if it is bigger it is inside the ground 
-        if player1_rect.right>=width:player1_rect.left=0
         screen.blit(player1,player1_rect)
         display_score()
     else:
@@ -126,8 +130,9 @@ while True:
         screen.blit(score_massege,score_massege_rect)
         if player1_rect.colliderect(door_rect):
             screen.fill((120,225,225))
-            game_over=font.render("You Win🔥🔥  =) ", False,"Black")
-            screen.blit(game_over,(200,height/2))
+            game_over=font.render("   You Win =)...Press Enter to exit the game :) ", False,"Black")
+            screen.blit(game_over,(250,height/2))
+            screen.blit(player3,player3_rect)
 
  
     pg.display.update()
