@@ -22,6 +22,9 @@ enemy_image=pg.transform.scale(enemy_image,(95,65))
 enemy_rect=enemy_image.get_rect(midbottom=(800,400))
 player1=pg.image.load("Image/Player/Player1.png").convert_alpha()
 player1=pg.transform.scale(player1,(120,95))
+door_image=pg.image.load("Image/door.png").convert_alpha()
+door_image=pg.transform.scale(door_image,(100,200))
+door_rect=door_image.get_rect(midbottom=(width-100,400))
 move=50
 coins=pg.image.load("Image/coins.png").convert_alpha()
 coins=pg.transform.scale(coins,(70,70))
@@ -75,6 +78,8 @@ while True:
     if game_active:            
         screen.blit(sky_imaage,(0,0))
         screen.blit(ground_image,(0,340))
+        screen.blit(door_image,door_rect)
+    
         #enemy_x_position-=6
         keys = pg.key.get_pressed()
 
@@ -96,7 +101,7 @@ while True:
         for enemy_rect in enemy_rects[:]:
             screen.blit(enemy_image, enemy_rect)
 
-            enemy_rect.x -= 1
+            enemy_rect.x -= 2
 
             if enemy_rect.right <= 0:
                 enemy_rect.left = 1000 
@@ -119,5 +124,11 @@ while True:
         score_massege=font.render(f"Your Score is {score}",False,(0,0,0))
         score_massege_rect=score_massege.get_rect(center=(500,100))
         screen.blit(score_massege,score_massege_rect)
+        if player1_rect.colliderect(door_rect):
+            screen.fill((120,225,225))
+            game_over=font.render("You Win🔥🔥  =) ", False,"Black")
+            screen.blit(game_over,(200,height/2))
+
+ 
     pg.display.update()
     clock.tick(60)#Consistent Game Speed
