@@ -9,6 +9,11 @@ height=500
 game_active=True
 coin_sound=pg.mixer.Sound("Sound/sound.wav")
 game_over_sound=pg.mixer.Sound("Sound/game_over.wav")
+Jump_sound=pg.mixer.Sound("Sound/jump.wav")
+win_sound=pg.mixer.Sound("Sound/win.wav")
+def start_game():
+    print("Game Started")
+
 def display_score():
     score_image=font.render(f"{score}",False,"Black")
     score_rect=score_image.get_rect(center=(400,50))
@@ -61,7 +66,8 @@ while True:
             if event.type==pg.KEYDOWN:
                 if player1_rect.bottom>=380:# the player can't jump until the player tuch the ground 
                     if event.key==pg.K_UP:
-                        player_gravity=-24              
+                        player_gravity=-24
+                        Jump_sound.play()              
         else:#if the game is not runing 
             if event.type==pg.KEYDOWN:
                 if event.key==pg.K_RETURN:
@@ -139,6 +145,7 @@ while True:
             game_over=font.render("   You Win =)...Press Enter to exit the game :) ", False,"Black")
             screen.blit(game_over,(250,height/2))
             screen.blit(player3,player3_rect)
+            win_sound.play()
 
  
     pg.display.update()
