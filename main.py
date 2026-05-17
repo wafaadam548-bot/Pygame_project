@@ -8,7 +8,7 @@ width=1000
 height=500
 game_active=True
 coin_sound=pg.mixer.Sound("Sound/sound.wav")
-game_over_sound=pg.mixer.Sound("")
+game_over_sound=pg.mixer.Sound("Sound/game_over.wav")
 def display_score():
     score_image=font.render(f"{score}",False,"Black")
     score_rect=score_image.get_rect(center=(400,50))
@@ -117,6 +117,7 @@ while True:
                 enemy_rect.left = 1000 
             enemy_hitbox = enemy_rect.inflate(-80, -40)
             if enemy_hitbox.colliderect(player1_rect):#if the player touch the enemy
+                game_over_sound.play()
                 game_active=False     
         screen.blit(enemy_image,(enemy_rect))
         player_gravity+=1
