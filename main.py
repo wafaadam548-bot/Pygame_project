@@ -1,10 +1,13 @@
 import pygame as pg
 from sys import exit
 import random
+
 pg.init()
+pg.mixer.init()
 width=1000
 height=500
 game_active=True
+sound=pg.mixer.Sound("Sound/sound.mp3")
 def display_score():
     score_image=font.render(f"{score}",False,"Black")
     score_rect=score_image.get_rect(center=(400,50))
@@ -103,6 +106,7 @@ while True:
             if player1_rect.colliderect(coin_rect):
                 coins_rect.remove(coin_rect)
                 score += 1
+                sound.play()
         for enemy_rect in enemy_rects[:]:
             screen.blit(enemy_image, enemy_rect)
 
