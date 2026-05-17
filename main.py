@@ -18,6 +18,7 @@ def display_score():
     score_image=font.render(f"{score}",False,"Black")
     score_rect=score_image.get_rect(center=(400,50))
     screen.blit(score_image,score_rect)
+#Vars
 screen=pg.display.set_mode((width,height))
 pg.display.set_caption("Escape Run  ")#change the name in the caption
 clock=pg.time.Clock()#it's going to help with the frame rate 
