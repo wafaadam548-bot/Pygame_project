@@ -6,7 +6,7 @@ pg.init()
 pg.mixer.init()
 width=1000
 height=500
-game_active=True
+game_active=False
 coin_sound=pg.mixer.Sound("Sound/sound.wav")
 game_over_sound=pg.mixer.Sound("Sound/game_over.wav")
 Jump_sound=pg.mixer.Sound("Sound/jump.wav")
@@ -35,6 +35,8 @@ door_image=pg.image.load("Image/door.png").convert_alpha()
 door_image=pg.transform.scale(door_image,(100,200))
 door_rect=door_image.get_rect(center=(900,300))
 move=50
+win_played = False
+greating=font.render("Hi To the Escape game... Press shift to start",False,(34,54,21))
 player3=pg.image.load("Image/Player/Player3.png").convert_alpha()
 player3=pg.transform.scale(player3,(300,300))
 player3_rect=player3.get_rect(center=(100,300))
@@ -58,42 +60,56 @@ for i in range(4):
     enemy_rects.append(enemy_rect)
 
 while True:
+    
     for event in pg.event.get():
         if event.type==pg.QUIT:
             pg.quit()#tell python to shut down all the pygame moudel 
             exit()#telling python to stop running the entire file
-        if game_active: #if the game is runing    
-            if event.type==pg.KEYDOWN:
-                if player1_rect.bottom>=380:# the player can't jump until the player tuch the ground 
-                    if event.key==pg.K_UP:
-                        player_gravity=-24
-                        Jump_sound.play()              
-        else:#if the game is not runing 
-            if event.type==pg.KEYDOWN:
-                if event.key==pg.K_RETURN:
-                    pg.quit()
-                    exit()
-                if event.key==pg.K_SPACE:
-                    game_active=True
-                    enemy_rect.left=1000 
-                    start_time=int(pg.time.get_ticks()/1000)
-                    score=0
-                    coins_rect=[]
-                    for i in range(90):
-                        coin_rect=coins.get_rect(midbottom=(100+ i * 200,350))#the i represent the space betwen each coin
-                        coins_rect.append(coin_rect)
-                    enemy_rects=[]    
-                    for i in range(4):
-                        enemy_rect=enemy_image.get_rect(midbottom=(800+i*300,400))
-                        enemy_rects.append(enemy_rect)
-                    player_gravity = 0
-                    player1_rect.midbottom = (move, 400)
-    if game_active:            
+        if event.type==pg.KEYDOWN:
+            if event.key==pg.K_RSHIFT:
+                game_active=True
+                start_time = int(pg.time.get_ticks() / 1000)
+            if game_active: #if the game is runing    
+                if event.type==pg.KEYDOWN:
+                    if player1_rect.bottom>=380:# the player can't jump until the player tuch the ground 
+                        if event.key==pg.K_UP:
+                            player_gravity=-24
+                            Jump_sound.play()              
+            else:#if the game is not runing 
+                if event.type==pg.KEYDOWN:
+                    if event.key==pg.K_RETURN:
+                        pg.quit()
+                        exit()
+                    if event.key==pg.K_SPACE:
+                        game_active=True
+                        enemy_rect.left=1000 
+                        start_time=int(pg.time.get_ticks()/1000)
+                        score=0
+                        win_played=False
+                        coins_rect=[]
+                        for i in range(90):
+                            coin_rect=coins.get_rect(midbottom=(100+ i * 200,350))#the i represent the space betwen each coin
+                            coins_rect.append(coin_rect)
+                        enemy_rects=[]    
+                        for i in range(4):
+                            enemy_rect=enemy_image.get_rect(midbottom=(800+i*300,400))
+                            enemy_rects.append(enemy_rect)
+                        player_gravity = 0
+    
+                        player1_rect.midbottom = (move, 400)
+    if  not game_active and start_time==0:
+        screen.fill((120,225,225))
+        screen.blit(greating,(230,300))
+        screen.blit(player3,player3_rect)
+    elif game_active==True:            
         screen.blit(sky_imaage,(0,0))
         screen.blit(ground_image,(0,340))
         screen.blit(door_image,door_rect)
         if player1_rect.colliderect(door_rect):
             game_active=False
+            if not win_played:
+                win_sound.play()
+                win_played = True
 
         #enemy_x_position-=6
         keys = pg.key.get_pressed()
@@ -145,7 +161,6 @@ while True:
             game_over=font.render("   You Win =)...Press Enter to exit the game :) ", False,"Black")
             screen.blit(game_over,(250,height/2))
             screen.blit(player3,player3_rect)
-            win_sound.play()
 
  
     pg.display.update()
