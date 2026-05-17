@@ -7,7 +7,7 @@ pg.mixer.init()
 width=1000
 height=500
 game_active=True
-sound=pg.mixer.Sound("Sound/sound.mp3")
+sound=pg.mixer.Sound("Sound/sound.wav")
 def display_score():
     score_image=font.render(f"{score}",False,"Black")
     score_rect=score_image.get_rect(center=(400,50))
